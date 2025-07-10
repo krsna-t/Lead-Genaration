@@ -4,7 +4,6 @@ import plotly.express as px
 
 st.set_page_config(page_title="Lead Generator", layout="wide")
 
-# ======= GLOBAL STYLING =======
 st.markdown("""
     <style>
     .css-1d391kg, .css-1cypcdb {
@@ -32,10 +31,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# ======= TITLE =======
 st.title("Lead Generation Engine")
 
-# ======= LOAD DATA =======
 @st.cache_data
 def load_data():
     df = pd.read_csv("leads.csv", parse_dates=["ImportDate"])
@@ -44,7 +41,6 @@ def load_data():
 
 df = load_data()
 
-# ======= SIDEBAR FILTERS =======
 with st.sidebar:
     st.markdown("### \U0001F50D Filter Leads")
 
@@ -71,7 +67,6 @@ with st.sidebar:
 
     st.markdown("---")
 
-# ======= FILTERING =======
 filtered = df[
     df["Country"].isin(selected_countries) &
     df["Product"].isin(selected_products)
@@ -79,7 +74,6 @@ filtered = df[
 if selected_competitors:
     filtered = filtered[filtered["Competitor"].isin(selected_competitors)]
 
-# ======= METRICS =======
 st.markdown("Summary Metrics")
 k1, k2, k3, k4 = st.columns(4)
 k1.metric("Total Leads", len(filtered))
@@ -89,7 +83,6 @@ k4.metric("Top Supplier", filtered["Supplier"].mode()[0] if not filtered.empty e
 
 st.markdown("Visualizations")
 
-# ======= CHARTS =======
 col1, col2 = st.columns(2)
 with col1:
     st.subheader("Leads by Country")
@@ -128,7 +121,6 @@ with col6:
     fig6 = px.bar(freq_product, title="Frequency by Product", labels={"value": "Avg Frequency"})
     st.plotly_chart(fig6, use_container_width=True)
 
-# ======= TABLE & DOWNLOAD =======
 st.subheader("Filtered Lead Table")
 st.dataframe(filtered, use_container_width=True)
 
