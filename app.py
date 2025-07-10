@@ -80,14 +80,14 @@ if selected_competitors:
     filtered = filtered[filtered["Competitor"].isin(selected_competitors)]
 
 # ======= METRICS =======
-st.markdown("###Summary Metrics")
+st.markdown("Summary Metrics")
 k1, k2, k3, k4 = st.columns(4)
 k1.metric("Total Leads", len(filtered))
 k2.metric("Avg Frequency", round(filtered["Frequency"].mean(), 2))
 k3.metric("Top Product", filtered["Product"].mode()[0] if not filtered.empty else "N/A")
 k4.metric("Top Supplier", filtered["Supplier"].mode()[0] if not filtered.empty else "N/A")
 
-st.markdown("###Visualizations")
+st.markdown("Visualizations")
 
 # ======= CHARTS =======
 col1, col2 = st.columns(2)
@@ -118,7 +118,7 @@ with col4:
 st.markdown("---")
 col5, col6 = st.columns(2)
 with col5:
-    st.subheader("\Top Suppliers")
+    st.subheader("Top Suppliers")
     sup_counts = filtered["Supplier"].value_counts()
     fig5 = px.bar(sup_counts, title="Suppliers", labels={"index": "Supplier", "value": "Shipments"})
     st.plotly_chart(fig5, use_container_width=True)
